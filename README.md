@@ -231,7 +231,7 @@ GROUP BY c.customer_id, c.customer_name, c.primary_freight_type
 ORDER BY c.primary_freight_type, Ranking;
 ```
 
-![IMAGEN.P7](./picture/P7.png)
+![IMAGEN.IMAGEN7](./picture/IMAGEN7.png)
 
 *Ranking de clientes por revenue dentro de cada tipo de carga*
 
@@ -286,7 +286,7 @@ JOIN customers c ON l.customer_id = c.customer_id
 GROUP BY c.customer_id, c.customer_name, FORMAT(l.load_date, 'yyyy-MM')
 ORDER BY c.customer_id, Mes;
 ```
-![IMAGEN.P9](./picture/P9.png)
+![IMAGEN.IMAGEN9](./picture/IMAGEN9.png)
 
 *Tasa de crecimiento mensual de revenue por cliente*
 
@@ -316,7 +316,7 @@ JOIN customers c ON l.customer_id = c.customer_id
 GROUP BY c.customer_id, c.customer_name
 ORDER BY Pct_Spot DESC;
 ```
-![IMAGEN.P10](./picture/P10.png)
+![IMAGEN.IMAGEN10](./picture/IMAGEN10.png)
 
 *Distribución de booking_type por cliente*
 
