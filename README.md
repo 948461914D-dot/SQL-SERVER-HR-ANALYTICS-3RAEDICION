@@ -1,4 +1,4 @@
-![IMAGEN.P0](./picture/P0.png)
+![IMAGEN.BANNER](./picture/BANNER.png)
 
 # Proyecto SQL: Análisis de Clientes y Rentabilidad de Cargas en Logística de Transporte
 
