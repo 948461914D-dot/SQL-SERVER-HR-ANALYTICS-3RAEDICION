@@ -255,7 +255,7 @@ JOIN customers c ON l.customer_id = c.customer_id
 GROUP BY c.customer_id, c.customer_name
 ORDER BY Pct_Participacion DESC;
 ```
-![IMAGEN.P8](./picture/P8.png)
+![IMAGEN.IMAGEN8](./picture/IMAGEN8.png)
 
 *Participación porcentual de cada cliente sobre el revenue total*
 
