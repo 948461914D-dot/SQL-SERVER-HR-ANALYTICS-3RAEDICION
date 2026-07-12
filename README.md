@@ -32,8 +32,6 @@ loads — 85,410 registros, 12 columnas: el detalle transaccional de cada carga 
 
 ## Tareas (Task)
 
-## Tareas (Task)
-
 En este análisis, ayudo al área de Planeamiento Financiero a responder lo siguiente:
 
 1. **Top Clientes:** ¿Cuáles son los 10 clientes que generan mayor revenue total?
@@ -93,6 +91,7 @@ GROUP BY c.customer_id, c.customer_name
 ORDER BY Total_Loads DESC;
 ```
 ![IMAGEN.P2](./picture/P2.png)
+
 *Loads totales y completados por cliente*
 
 El resultado muestra un dato muy relevante: casi todos los clientes del top tienen una tasa de cumplimiento del **100%**, es decir que prácticamente ninguna de sus cargas queda en un estado distinto a "Completed" (canceladas, en tránsito u otros). La única excepción visible es **United Supply Chain**, con 489 de 497 cargas completadas (98.4%), una diferencia mínima pero la única que rompe el patrón.
@@ -122,6 +121,7 @@ GROUP BY c.customer_id, c.customer_name, c.account_status
 ORDER BY Ultima_Carga DESC;
 ```
 ![IMAGEN.P3](./picture/P3.png)
+
 *Clientes inactivos con cargas recientes*
 
 El resultado muestra un dato muy relevante: casi todos los clientes del top tienen una tasa de cumplimiento del **100%**, es decir que prácticamente ninguna de sus cargas queda en un estado distinto a "Completed" (canceladas, en tránsito u otros). La única excepción visible es **United Supply Chain**, con 489 de 497 cargas completadas (98.4%), una diferencia mínima pero la única que rompe el patrón.
@@ -149,6 +149,7 @@ GROUP BY c.customer_type
 ORDER BY Revenue_Promedio DESC;
 ```
 ![IMAGEN.P4](./picture/P4.png)
+
 *Revenue promedio por tipo de cliente*
 
 Los tres tipos de cliente muestran un revenue promedio por carga muy similar (entre S/ 3,067 y S/ 3,085), con una diferencia de apenas 0.6% entre el más alto (Spot, S/ 3,085.04) y el más bajo (Contract, S/ 3,067.32). Esto indica que, a nivel de tarifa por carga individual, no existe una diferencia comercial significativa entre modalidades — el pricing parece estar bastante estandarizado independientemente del tipo de contrato.
@@ -179,6 +180,7 @@ GROUP BY c.customer_id, c.customer_name, c.customer_type, c.annual_revenue_poten
 ORDER BY Brecha DESC;
 ```
 ![IMAGEN.P5](./picture/P5.png)
+
 *Brecha entre potencial y revenue real por cliente*
 
 os resultados muestran brechas muy grandes entre lo que un cliente podría facturar y lo que realmente factura: el caso más extremo es **Global Manufacturing**, con un potencial anual de S/ 4,925,587 pero un revenue real de solo S/ 1,152,769.50, es decir una brecha de **76.6%** sin capturar. El patrón se repite en todo el top 17, donde ningún cliente supera el 28% de aprovechamiento de su potencial (brechas entre 71.9% y 76.6%).
@@ -204,6 +206,7 @@ GROUP BY c.customer_id, c.customer_name, FORMAT(l.load_date, 'yyyy-MM')
 ORDER BY c.customer_id, Mes;
 ```
 ![IMAGEN.P6](./picture/P6.png)
+
 *Revenue mensual por cliente*
 
 Tomando como ejemplo a **Metro Wholesale** (CUST00001), se observa una variación mensual considerable: el revenue oscila entre montos tan bajos como S/ 15,930.35 (abril 2023) y picos de S/ 51,645.81 (febrero 2022), sin un patrón estacional evidente a simple vista dentro de estos 17 meses. Esto sugiere que el volumen de cargas de este cliente no sigue un ciclo estable, sino que depende de factores puntuales mes a mes (posiblemente demanda spot o proyectos específicos).
@@ -227,7 +230,9 @@ JOIN customers c ON l.customer_id = c.customer_id
 GROUP BY c.customer_id, c.customer_name, c.primary_freight_type
 ORDER BY c.primary_freight_type, Ranking;
 ```
+
 ![IMAGEN.P7](./picture/P7.png)
+
 *Ranking de clientes por revenue dentro de cada tipo de carga*
 
 Dentro del segmento **Automotive**, el liderazgo lo tiene **Superior Group** (CUST00181) con S/ 1,542,321.02, seguido de cerca por **Metro Foods** (S/ 1,483,188.90) y **First Group** (S/ 1,481,527.84). La diferencia entre el puesto #1 y el #17 es de apenas 12%, lo que confirma el mismo patrón visto en la Pregunta #1: dentro de este tipo de carga no hay un cliente que domine desproporcionadamente el revenue, sino una base amplia de clientes con contribución similar.
@@ -251,6 +256,7 @@ GROUP BY c.customer_id, c.customer_name
 ORDER BY Pct_Participacion DESC;
 ```
 ![IMAGEN.P8](./picture/P8.png)
+
 *Participación porcentual de cada cliente sobre el revenue total*
 
 El revenue total de toda la cartera asciende a **S/ 262,525,800.29**, y el resultado confirma numéricamente lo que se venía intuyendo desde la Pregunta #1: incluso el cliente líder, **Superior Group**, representa apenas **0.59%** del revenue total. Esto significa que se necesitarían más de 170 clientes con un peso similar solo para explicar el 100% de los ingresos, evidenciando una cartera **altamente atomizada y sin concentración de riesgo** en ningún cliente individual.
@@ -281,6 +287,7 @@ GROUP BY c.customer_id, c.customer_name, FORMAT(l.load_date, 'yyyy-MM')
 ORDER BY c.customer_id, Mes;
 ```
 ![IMAGEN.P9](./picture/P9.png)
+
 *Tasa de crecimiento mensual de revenue por cliente*
 
 Para **Metro Wholesale**, la tasa de crecimiento mes a mes confirma la alta volatilidad detectada en la Pregunta #6: las variaciones oscilan entre caídas de **-54.31%** (marzo 2022) y **-51.25%** (abril 2023), y picos de crecimiento de hasta **+141.97%** (mayo 2023) y **+65.94%** (abril 2022). En los 16 meses con dato comparable, el revenue cambia de dirección (de crecimiento a caída o viceversa) en la gran mayoría de los periodos, sin mostrar una tendencia sostenida ni ascendente ni descendente.
@@ -310,6 +317,7 @@ GROUP BY c.customer_id, c.customer_name
 ORDER BY Pct_Spot DESC;
 ```
 ![IMAGEN.P10](./picture/P10.png)
+
 *Distribución de booking_type por cliente*
 
 Un detalle importante antes de interpretar los porcentajes: al sumar `Loads_Spot` + `Loads_Dedicated` no se llega al `Total_Loads` de cada cliente (por ejemplo, Superior Retail tiene 400 cargas totales, pero solo 122 Spot + 183 Dedicated = 305). Esto confirma que `booking_type` tiene una tercera categoría además de "Spot" y "Dedicated" (probablemente "Contract", visto en columnas anteriores), que no se está contabilizando en esta consulta. Antes de sacar conclusiones definitivas, sería necesario agregar una columna `Loads_Otros` (Total_Loads - Spot - Dedicated) para tener el panorama completo.
